@@ -264,18 +264,3 @@ units:
       file: org/jboss/forge/roaster/model/impl/AnnotationImpl.class
       sourceDir: impl/src/main/java
       sourceFile: org/jboss/forge/roaster/model/impl/AnnotationImpl.java
-  - target:
-    - dir: impl/target/classes
-      file: org/jboss/forge/roaster/model/impl/JavaDocImpl.class
-      sourceDir: impl/src/main/java
-      sourceFile: org/jboss/forge/roaster/model/impl/JavaDocImpl.java
-    # Child of JavaDocImpl.class
-    - dir: api/target/classes
-      file: org/jboss/forge/roaster/model/JavaDocTag.class
-      sourceDir: api/src/main/java
-      sourceFile: org/jboss/forge/roaster/model/JavaDocTag.java
-    # Child of JavaDocImpl.class
-    - dir: api/target/classes
-      file: org/jboss/forge/roaster/model/source/JavaDocSource.class
-      sourceDir: api/src/main/java
-      sourceFile: org/jboss/forge/roaster/model/source/JavaDocSource.java
