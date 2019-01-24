@@ -84,3 +84,198 @@ units:
       file: org/jboss/forge/roaster/spi/WildcardImportResolver.class
       sourceDir: api/src/main/java
       sourceFile: org/jboss/forge/roaster/spi/WildcardImportResolver.java
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Types.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Types.java
+    # Child of Types.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Type.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Type.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/AnnotationImpl.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/AnnotationImpl.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Annotation.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Annotation.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/JavaClass.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/JavaClass.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/ValuePair.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/ValuePair.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/AnnotationSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/AnnotationSource.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/AnnotationTargetSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/AnnotationTargetSource.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/JavaSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/JavaSource.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Assert.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Assert.java
+    # Child of AnnotationImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Strings.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Strings.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/AbstractJavaSourceMemberHolder.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/AbstractJavaSourceMemberHolder.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Field.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Field.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/JavaInterface.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/JavaInterface.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Method.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Method.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Parameter.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Parameter.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Property.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Property.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/ast/MethodFinderVisitor.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/ast/MethodFinderVisitor.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/InterfaceCapableSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/InterfaceCapableSource.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/JavaInterfaceSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/JavaInterfaceSource.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/MemberSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/MemberSource.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/PropertyHolderSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/PropertyHolderSource.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Methods.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Methods.java
+    # Child of AbstractJavaSourceMemberHolder.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Types.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Types.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/AnnotationElementImpl.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/AnnotationElementImpl.java
+    # Child of AnnotationElementImpl.class
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/ast/AnnotationAccessor.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/ast/AnnotationAccessor.java
+    # Child of AnnotationElementImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/AnnotationElementSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/AnnotationElementSource.java
+    # Child of AnnotationElementImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/JavaAnnotationSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/JavaAnnotationSource.java
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/SerialVersionUIDComputer.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/SerialVersionUIDComputer.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/PropertyImpl.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/PropertyImpl.java
+    # Child of PropertyImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/Visibility.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/Visibility.java
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Methods.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Methods.java
+    # Child of Methods.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/MethodHolder.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/MethodHolder.java
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/Streams.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/Streams.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/ast/AnnotationAccessor.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/ast/AnnotationAccessor.java
+    # Child of AnnotationAccessor.class
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/AnnotationImpl.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/AnnotationImpl.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/JavaDocImpl.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/JavaDocImpl.java
+    # Child of JavaDocImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/JavaDocTag.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/JavaDocTag.java
+    # Child of JavaDocImpl.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/JavaDocSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/JavaDocSource.java
