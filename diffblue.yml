@@ -1,0 +1,86 @@
+units:
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/Refactory.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Refactory.java
+    # Child of Refactory.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/FieldSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/FieldSource.java
+    # Child of Refactory.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/JavaClassSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/JavaClassSource.java
+    # Child of Refactory.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/MethodSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/MethodSource.java
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/DesignPatterns.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/DesignPatterns.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/Roaster.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/Roaster.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/JavaType.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/JavaType.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/Import.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/Import.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/Importer.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/Importer.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/MethodHolderSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/MethodHolderSource.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/ParameterSource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/ParameterSource.java
+    # Child of DesignPatterns.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/source/PropertySource.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/source/PropertySource.java
+  - target:
+    - dir: dist/target/classes
+      file: org/jboss/forge/roaster/Bootstrap.class
+      sourceDir: dist/src/main/java
+      sourceFile: org/jboss/forge/roaster/Bootstrap.java
+    # Child of Bootstrap.class
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/util/Formatter.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/Formatter.java
+  - target:
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/model/util/StringEscapeUtils.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/util/StringEscapeUtils.java
+  - target:
+    - dir: impl/target/classes
+      file: org/jboss/forge/roaster/model/impl/ClassLoaderWildcardImportResolver.class
+      sourceDir: impl/src/main/java
+      sourceFile: org/jboss/forge/roaster/model/impl/ClassLoaderWildcardImportResolver.java
+    # Child of ClassLoaderWildcardImportResolver.class
+    - dir: api/target/classes
+      file: org/jboss/forge/roaster/spi/WildcardImportResolver.class
+      sourceDir: api/src/main/java
+      sourceFile: org/jboss/forge/roaster/spi/WildcardImportResolver.java
