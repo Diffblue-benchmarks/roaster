@@ -1,11 +1,14 @@
 language: java
-sudo: false
 jdk:
-  - oraclejdk8
+  - openjdk8
   - openjdk11
 cache:
   directories:
-  - .autoconf
   - $HOME/.m2
 notifications:
-  irc: chat.freenode.net#forge
+  irc:
+    channels:
+        - "chat.freenode.net#forge"
+    on_success: change # default: always
+    on_failure: always # default: always
+

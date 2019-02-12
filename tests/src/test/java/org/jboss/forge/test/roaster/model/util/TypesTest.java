@@ -5,19 +5,20 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.jboss.forge.roaster.model.util;
+package org.jboss.forge.test.roaster.model.util;
 
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.Type;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.util.Types;
 import org.junit.Test;
 
 /**
@@ -40,7 +41,7 @@ public class TypesTest
    }
 
    @Test
-   public void testAreEquivalent() throws Exception
+   public void testAreEquivalent()
    {
       assertTrue(Types.areEquivalent("com.example.Domain", "com.example.Domain"));
       assertTrue(Types.areEquivalent("Domain", "com.example.Domain"));
@@ -52,21 +53,21 @@ public class TypesTest
    }
 
    @Test
-   public void testIsQualified() throws Exception
+   public void testIsQualified()
    {
       assertTrue(Types.isQualified("org.jboss.forge.roaster.JavaParser"));
       assertFalse(Types.isQualified("JavaParser"));
    }
 
    @Test
-   public void testGetPackage() throws Exception
+   public void testGetPackage()
    {
       assertEquals("com.example", Types.getPackage("com.example.Domain"));
       assertEquals("", Types.getPackage("Domain"));
    }
 
    @Test
-   public void testIsSimpleName() throws Exception
+   public void testIsSimpleName()
    {
       assertTrue(Types.isSimpleName("Domain$"));
       assertFalse(Types.isSimpleName("9Domain$"));
@@ -120,7 +121,6 @@ public class TypesTest
       assertEquals(1, Types.getArrayDimension(int[].class.getName()));
       assertEquals(2, Types.getArrayDimension(int[][].class.getName()));
       assertEquals(3, Types.getArrayDimension(int[][][].class.getName()));
-
    }
 
    @Test
@@ -162,7 +162,7 @@ public class TypesTest
    }
 
    @Test
-   public void testAssertToSimpleName() throws Exception
+   public void testAssertToSimpleName()
    {
       assertEquals("List<String>", Types.toSimpleName("java.util.List<java.lang.String>"));
       assertEquals("List<String>", Types.toSimpleName("java.util.List<String>"));
@@ -207,7 +207,148 @@ public class TypesTest
    @Test
    public void testSplitGenerics()
    {
+      assertArrayEquals(new String[] {}, Types.splitGenerics("Foo"));
       assertArrayEquals(new String[] { "String", "Integer" }, Types.splitGenerics("Foo<String,Integer>"));
-      assertArrayEquals(new String[] { "Bar<A>", "Bar<B>"}, Types.splitGenerics("Foo<Bar<A>, Bar<B>>"));
+      assertArrayEquals(new String[] { "Bar<A>", "Bar<B>" }, Types.splitGenerics("Foo<Bar<A>, Bar<B>>"));
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testAreEquivalentFailesIfLeftIsNull()
+   {
+      Types.areEquivalent(null, "");
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testAreEquivalentFailesIfRightIsNull()
+   {
+      Types.areEquivalent("", null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToSimpleNameFailesIfArgumentIsNull()
+   {
+      Types.toSimpleName(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToTokenizeClassNameFailesIfArgumentIsNull()
+   {
+      Types.tokenizeClassName(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsQualifiedFailesIfArgumentIsNull()
+   {
+      Types.isQualified(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToGetPackageFailesIfArgumentIsNull()
+   {
+      Types.getPackage(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsSimpleNameFailesIfArgumentIsNull()
+   {
+      Types.isSimpleName(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsJavaLangFailesIfArgumentIsNull()
+   {
+      Types.isJavaLang(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsBasicTypeFailesIfArgumentIsNull()
+   {
+      Types.isBasicType(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsGenericFailesIfArgumentIsNull()
+   {
+      Types.isGeneric(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToValidateGenericsFailesIfArgumentIsNull()
+   {
+      Types.validateGenerics(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToStripGenericsFailesIfArgumentIsNull()
+   {
+      Types.stripGenerics(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToGetGenericsFailesIfArgumentIsNull()
+   {
+      Types.getGenerics(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToGetGenericsTypeParameterFailesIfArgumentIsNull()
+   {
+      Types.getGenericsTypeParameter(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsPrimitiveFailesIfArgumentIsNull()
+   {
+      Types.isPrimitive(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToStripArrayFailesIfArgumentIsNull()
+   {
+      Types.stripArray(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToIsArrayFailesIfArgumentIsNull()
+   {
+      Types.isArray(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToRebuildGenericNameWithArraysFailesIfTypeNameIsNull()
+   {
+      JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
+      Type<?> type = javaClass.addField().setName("foo").setType("Bar").getType();
+      Types.rebuildGenericNameWithArrays(null, type);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToRebuildGenericNameWithArraysFailesIfTypeIsNull()
+   {
+      Types.rebuildGenericNameWithArrays("abc", null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToGetArrayDimensionFailesIfArgumentIsNull()
+   {
+      Types.getArrayDimension(null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToGetDefaultValueFailesIfStringArgumentIsNull()
+   {
+      Types.getDefaultValue((String) null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToGetDefaultValueFailesIfClassArgumentIsNull()
+   {
+      Types.getDefaultValue((Class<?>) null);
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void testToSplitGenericsFailesIfArgumentIsNull()
+   {
+      Types.splitGenerics(null);
    }
 }

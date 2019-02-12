@@ -6,6 +6,8 @@
  */
 package org.jboss.forge.roaster.model.impl;
 
+import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +15,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -34,7 +37,6 @@ import org.jboss.forge.roaster.model.ValuePair;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.AnnotationTargetSource;
 import org.jboss.forge.roaster.model.source.JavaSource;
-import org.jboss.forge.roaster.model.util.Assert;
 import org.jboss.forge.roaster.model.util.Strings;
 
 /**
@@ -100,7 +102,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    {
       this.parent = parent;
       ast = ((ASTNode) parent.getInternal()).getAST();
-      Assert.notNull(internal, "internal representation must not be null");
+      requireNonNull(internal, "internal representation must not be null");
       annotation = (org.eclipse.jdt.core.dom.Annotation) internal;
    }
 
@@ -148,10 +150,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
          {
             return resolveTypeLiteralName((TypeLiteral) value);
          }
-         else
-         {
-            return value.toString();
-         }
+         return value.toString();
       }
       if (isNormal())
       {
@@ -189,10 +188,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
                   {
                      return resolveTypeLiteralName((TypeLiteral) value);
                   }
-                  else
-                  {
-                     return value.toString();
-                  }
+                  return value.toString();
                }
             }
          }
@@ -203,7 +199,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public List<ValuePair> getValues()
    {
-      List<ValuePair> result = new ArrayList<ValuePair>();
+      List<ValuePair> result = new ArrayList<>();
       if (isNormal())
       {
          for (Object v : ((NormalAnnotation) annotation).values())
@@ -268,7 +264,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
       {
          NormalAnnotation na = (NormalAnnotation) annotation;
 
-         List<MemberValuePair> toBeRemoved = new ArrayList<MemberValuePair>();
+         List<MemberValuePair> toBeRemoved = new ArrayList<>();
          for (Object v : na.values())
          {
             if (v instanceof MemberValuePair)
@@ -309,7 +305,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> setLiteralValue(final String value)
    {
-      Assert.notNull(value, NULL_NOT_ACCEPTED);
+      requireNonNull(value, NULL_NOT_ACCEPTED);
 
       if (isMarker())
       {
@@ -358,7 +354,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @SuppressWarnings("unchecked")
    public AnnotationSource<O> setLiteralValue(final String name, final String value)
    {
-      Assert.notNull(value, NULL_NOT_ACCEPTED);
+      requireNonNull(value, NULL_NOT_ACCEPTED);
 
       if (!isNormal() && !DEFAULT_VALUE.equals(name))
       {
@@ -463,13 +459,13 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> setEnumArrayValue(String name, final Enum<?>... values)
    {
-      Assert.notNull(values, NULL_ARRAY_NOT_ACCEPTED);
+      requireNonNull(values, NULL_ARRAY_NOT_ACCEPTED);
 
-      final List<String> literals = new ArrayList<String>();
+      final List<String> literals = new ArrayList<>();
 
       for (Enum<?> value : values)
       {
-         Assert.notNull(value, NULL_VALUE_NOT_ACCEPTED);
+         requireNonNull(value, NULL_VALUE_NOT_ACCEPTED);
          getOrigin().addImport(value.getDeclaringClass());
          literals.add(value.getDeclaringClass().getSimpleName() + "." + value.name());
       }
@@ -529,7 +525,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
                && type != AnnotationType.NORMAL)
       {
          String value = this.getLiteralValue();
-         AnnotationImpl<O, T> na = new AnnotationImpl<O, T>(parent, type);
+         AnnotationImpl<O, T> na = new AnnotationImpl<>(parent, type);
          na.setName(getName());
          replace(annotation, na.annotation);
          annotation = na.annotation;
@@ -755,7 +751,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> removeAnnotationValue(Annotation<O> element)
    {
-      Assert.notNull(element, "Cannot remove null element");
+      requireNonNull(element, "Cannot remove null element");
 
       if (isSingleValue())
       {
@@ -787,7 +783,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> removeAnnotationValue(String name, Annotation<O> element)
    {
-      Assert.notNull(element, "Cannot remove null element");
+      requireNonNull(element, "Cannot remove null element");
 
       if (isSingleValue() && Strings.areEqual(name, DEFAULT_VALUE))
       {
@@ -795,7 +791,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
       }
       if (isNormal())
       {
-         final Set<String> identifiers = new HashSet<String>();
+         final Set<String> identifiers = new HashSet<>();
          for (@SuppressWarnings("unchecked")
          Iterator<Object> values = ((NormalAnnotation) annotation).values().iterator(); values.hasNext();)
          {
@@ -924,7 +920,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
       final Expression expr = getElementValueExpression(name);
       if (expr instanceof ArrayInitializer)
       {
-         final List<AnnotationSource<O>> results = new ArrayList<AnnotationSource<O>>();
+         final List<AnnotationSource<O>> results = new ArrayList<>();
          @SuppressWarnings("unchecked")
          final List<Expression> arrayElements = ((ArrayInitializer) expr).expressions();
          for (Expression arrayElement : arrayElements)
@@ -958,7 +954,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
       final Expression expr = getElementValueExpression(name);
       if (expr instanceof ArrayInitializer)
       {
-         final List<E> results = new ArrayList<E>();
+         final List<E> results = new ArrayList<>();
          @SuppressWarnings("unchecked")
          final List<Expression> arrayElements = ((ArrayInitializer) expr).expressions();
          for (Expression arrayElement : arrayElements)
@@ -1009,7 +1005,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
       final Expression expr = getElementValueExpression(name);
       if (expr instanceof ArrayInitializer)
       {
-         final List<Class<?>> result = new ArrayList<Class<?>>();
+         final List<Class<?>> result = new ArrayList<>();
          @SuppressWarnings("unchecked")
          final List<Expression> arrayElements = ((ArrayInitializer) expr).expressions();
          for (Expression expression : arrayElements)
@@ -1035,7 +1031,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public String[] getStringArrayValue(String name)
    {
-      final List<String> result = new ArrayList<String>();
+      final List<String> result = new ArrayList<>();
       String literalValue = getLiteralValue(name);
       // Remove {}
       if (literalValue.startsWith("{") && literalValue.endsWith("}"))
@@ -1055,7 +1051,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> setClassValue(String name, Class<?> value)
    {
-      Assert.notNull(value, NULL_NOT_ACCEPTED);
+      requireNonNull(value, NULL_NOT_ACCEPTED);
 
       if (!value.isPrimitive())
       {
@@ -1085,13 +1081,13 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> setStringArrayValue(String name, String[] values)
    {
-      Assert.notNull(values, NULL_ARRAY_NOT_ACCEPTED);
+      requireNonNull(values, NULL_ARRAY_NOT_ACCEPTED);
 
-      final List<String> literals = new ArrayList<String>();
+      final List<String> literals = new ArrayList<>();
 
       for (String value : values)
       {
-         Assert.notNull(value, NULL_VALUE_NOT_ACCEPTED);
+         requireNonNull(value, NULL_VALUE_NOT_ACCEPTED);
          literals.add(Strings.enquote(value));
       }
       return setLiteralValue(name,
@@ -1101,13 +1097,13 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
    @Override
    public AnnotationSource<O> setClassArrayValue(String name, Class<?>... values)
    {
-      Assert.notNull(values, NULL_ARRAY_NOT_ACCEPTED);
+      requireNonNull(values, NULL_ARRAY_NOT_ACCEPTED);
 
-      final List<String> literals = new ArrayList<String>();
+      final List<String> literals = new ArrayList<>();
 
       for (Class<?> value : values)
       {
-         Assert.notNull(value, NULL_VALUE_NOT_ACCEPTED);
+         requireNonNull(value, NULL_VALUE_NOT_ACCEPTED);
 
          if (!value.isPrimitive())
          {
@@ -1148,7 +1144,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
 
    private String resolveTypeLiteralName(TypeLiteral typeLiteral)
    {
-      final Type<O> type = new TypeImpl<O>(getOrigin(), typeLiteral.getType());
+      final Type<O> type = new TypeImpl<>(getOrigin(), typeLiteral.getType());
       if (type.isPrimitive())
       {
          final Class<?>[] primitiveTypes = { boolean.class, byte.class, short.class, int.class, long.class,
@@ -1169,7 +1165,7 @@ public class AnnotationImpl<O extends JavaSource<O>, T> implements AnnotationSou
 
    private Class<?> resolveTypeLiteral(TypeLiteral typeLiteral)
    {
-      final Type<O> type = new TypeImpl<O>(getOrigin(), typeLiteral.getType());
+      final Type<O> type = new TypeImpl<>(getOrigin(), typeLiteral.getType());
       if (type.isPrimitive())
       {
          final Class<?>[] primitiveTypes = { boolean.class, byte.class, short.class, int.class, long.class,

@@ -6,8 +6,10 @@
  */
 package org.jboss.forge.test.roaster.model;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class JavaPackageInfoTest
 {
 
    @Test
-   public void testCanCreatePackageInfo() throws Exception
+   public void testCanCreatePackageInfo()
    {
       JavaPackageInfoSource packageInfo = Roaster.create(JavaPackageInfoSource.class);
       packageInfo.setPackage("org.jboss.forge.roaster");
@@ -33,19 +35,34 @@ public class JavaPackageInfoTest
       Assert.assertEquals("package-info", packageInfo.getName());
    }
 
+   @Test
+   public void testLocation()
+   {
+      JavaPackageInfoSource packageInfo = Roaster.create(JavaPackageInfoSource.class);
+      packageInfo.setPackage("abc");
+      Assert.assertThat(packageInfo.getStartPosition(), is(0));
+      Assert.assertThat(packageInfo.getEndPosition(), is(20)); // TODO check this
+      Assert.assertThat(packageInfo.getColumnNumber(), is(0));
+      Assert.assertThat(packageInfo.getLineNumber(), is(1));
+   }
+
    @Test(expected = UnsupportedOperationException.class)
-   public void testSetPackageInfoNameThrowsUnsupportedOperation() throws Exception
+   public void testSetPackageInfoNameThrowsUnsupportedOperation()
    {
       JavaPackageInfoSource packageInfo = Roaster.create(JavaPackageInfoSource.class);
       packageInfo.setName("anything");
    }
 
    @Test
-   public void testCanParsePackageInfo() throws Exception
+   public void testCanParsePackageInfo() throws IOException
    {
-      InputStream stream = JavaPackageInfoTest.class
-               .getResourceAsStream("/org/jboss/forge/grammar/java/package-info.java");
-      JavaPackageInfoSource javaPkg = Roaster.parse(JavaPackageInfoSource.class, stream);
+      JavaPackageInfoSource javaPkg;
+      String fileName = "/org/jboss/forge/grammar/java/package-info.java";
+      try (InputStream stream = JavaPackageInfoTest.class.getResourceAsStream(fileName))
+      {
+         javaPkg = Roaster.parse(JavaPackageInfoSource.class, stream);
+      }
+
       assertEquals("org.jboss.forge.test.roaster.model", javaPkg.getPackage());
       Assert.assertEquals("package-info", javaPkg.getName());
       Assert.assertNotNull(javaPkg.getImport("javax.xml.bind.annotation.XmlSchema"));
@@ -81,5 +98,6 @@ public class JavaPackageInfoTest
 
    public @interface MyPLAnnotation
    {
+      // empty for testing
    }
 }

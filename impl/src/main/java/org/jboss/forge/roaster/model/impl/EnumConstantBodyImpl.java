@@ -65,6 +65,30 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    }
 
    @Override
+   public int getStartPosition()
+   {
+      return getBody().getStartPosition();
+   }
+
+   @Override
+   public int getColumnNumber()
+   {
+      return ((JavaEnumImpl) javaEnum).unit.getColumnNumber(getStartPosition());
+   }
+
+   @Override
+   public int getLineNumber()
+   {
+      return ((JavaEnumImpl) javaEnum).unit.getLineNumber(getStartPosition());
+   }
+
+   @Override
+   public int getEndPosition()
+   {
+      return (getStartPosition() == -1) ? -1 : getStartPosition() + getBody().getLength();
+   }
+
+   @Override
    public String getCanonicalName()
    {
       return javaEnum.getCanonicalName() + "." + enumConstant.getName();
@@ -447,7 +471,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public List<MemberSource<Body, ?>> getMembers()
    {
-      final List<MemberSource<Body, ?>> result = new ArrayList<MemberSource<Body, ?>>();
+      final List<MemberSource<Body, ?>> result = new ArrayList<>();
       result.addAll(getFields());
       result.addAll(getMethods());
       return Collections.unmodifiableList(result);
@@ -456,7 +480,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public FieldSource<Body> addField()
    {
-      FieldSource<Body> field = new FieldImpl<Body>(this);
+      FieldSource<Body> field = new FieldImpl<>(this);
       addField(field);
       return field;
    }
@@ -471,7 +495,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
       for (FieldSource<JavaClassSource> stubField : fields)
       {
          Object variableDeclaration = stubField.getInternal();
-         FieldSource<Body> field = new FieldImpl<Body>(this, variableDeclaration, true);
+         FieldSource<Body> field = new FieldImpl<>(this, variableDeclaration, true);
          addField(field);
          if (result == null)
          {
@@ -499,7 +523,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public List<FieldSource<Body>> getFields()
    {
-      final List<FieldSource<Body>> result = new ArrayList<FieldSource<Body>>();
+      final List<FieldSource<Body>> result = new ArrayList<>();
 
       final List<BodyDeclaration> bodyDeclarations = getBody().bodyDeclarations();
       for (BodyDeclaration bodyDeclaration : bodyDeclarations)
@@ -510,7 +534,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
             List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
             for (VariableDeclarationFragment fragment : fragments)
             {
-               result.add(new FieldImpl<Body>(this, fragment));
+               result.add(new FieldImpl<>(this, fragment));
             }
          }
       }
@@ -700,7 +724,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public MethodSource<Body> addMethod()
    {
-      final MethodSource<Body> m = new MethodImpl<Body>(this);
+      final MethodSource<Body> m = new MethodImpl<>(this);
       getBody().bodyDeclarations().add(m.getInternal());
       return m;
    }
@@ -708,7 +732,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public MethodSource<Body> addMethod(final String method)
    {
-      final MethodSource<Body> m = new MethodImpl<Body>(this, method);
+      final MethodSource<Body> m = new MethodImpl<>(this, method);
       getBody().bodyDeclarations().add(m.getInternal());
       return m;
    }
@@ -716,7 +740,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public MethodSource<Body> addMethod(java.lang.reflect.Method method)
    {
-      final MethodSource<Body> m = new MethodImpl<Body>(this, method);
+      final MethodSource<Body> m = new MethodImpl<>(this, method);
       getBody().bodyDeclarations().add(m.getInternal());
       return m;
    }
@@ -724,7 +748,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public MethodSource<Body> addMethod(Method<?, ?> method)
    {
-      MethodSource<Body> m = new MethodImpl<Body>(this, method.toString());
+      MethodSource<Body> m = new MethodImpl<>(this, method.toString());
       getBody().bodyDeclarations().add(m.getInternal());
       return m;
    }
@@ -732,14 +756,14 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
    @Override
    public List<MethodSource<Body>> getMethods()
    {
-      final List<MethodSource<Body>> result = new ArrayList<MethodSource<Body>>();
+      final List<MethodSource<Body>> result = new ArrayList<>();
 
       final MethodFinderVisitor methodFinderVisitor = new MethodFinderVisitor();
       getBody().accept(methodFinderVisitor);
 
       for (MethodDeclaration methodDeclaration : methodFinderVisitor.getMethods())
       {
-         result.add(new MethodImpl<Body>(this, methodDeclaration));
+         result.add(new MethodImpl<>(this, methodDeclaration));
       }
       return Collections.unmodifiableList(result);
    }
@@ -757,7 +781,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
       Document document = parentImpl.document;
       CompilationUnit unit = parentImpl.unit;
 
-      final List<JavaSource<?>> result = new ArrayList<JavaSource<?>>();
+      final List<JavaSource<?>> result = new ArrayList<>();
 
       final List<BodyDeclaration> bodyDeclarations = getBody().bodyDeclarations();
       for (BodyDeclaration body : bodyDeclarations)
@@ -777,7 +801,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
       body.accept(typeDeclarationFinder);
       final List<AbstractTypeDeclaration> declarations = typeDeclarationFinder.getTypeDeclarations();
 
-      final List<AbstractTypeDeclaration> result = new ArrayList<AbstractTypeDeclaration>(declarations);
+      final List<AbstractTypeDeclaration> result = new ArrayList<>(declarations);
       if (!declarations.isEmpty())
       {
          // We don't want to return the current enum constant body's declaration.
@@ -920,7 +944,7 @@ class EnumConstantBodyImpl implements EnumConstantSource.Body
          javadoc = body.getAST().newJavadoc();
          body.setJavadoc(javadoc);
       }
-      return new JavaDocImpl<Body>(this, javadoc);
+      return new JavaDocImpl<>(this, javadoc);
    }
 
    @Override

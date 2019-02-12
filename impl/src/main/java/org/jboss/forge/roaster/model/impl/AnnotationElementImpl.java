@@ -7,6 +7,8 @@
 
 package org.jboss.forge.roaster.model.impl;
 
+import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,6 @@ import org.jboss.forge.roaster.model.ast.AnnotationAccessor;
 import org.jboss.forge.roaster.model.source.AnnotationElementSource;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaAnnotationSource;
-import org.jboss.forge.roaster.model.util.Assert;
 import org.jboss.forge.roaster.model.util.Strings;
 import org.jboss.forge.roaster.model.util.Types;
 
@@ -112,7 +113,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
       @Override
       public DefaultValue setString(String value)
       {
-         Assert.notNull(value, "null not accepted");
+         requireNonNull(value, "null not accepted");
          return setLiteral(Strings.enquote(value));
       }
 
@@ -126,13 +127,13 @@ public class AnnotationElementImpl implements AnnotationElementSource
       @Override
       public <T extends Enum<T>> DefaultValue setEnumArray(T... values)
       {
-         Assert.notNull(values, "null array not accepted");
+         requireNonNull(values, "null array not accepted");
 
-         final List<String> literals = new ArrayList<String>();
+         final List<String> literals = new ArrayList<>();
 
          for (Enum<?> value : values)
          {
-            Assert.notNull(value, "null value not accepted");
+            requireNonNull(value, "null value not accepted");
 
             getOrigin().addImport(value.getDeclaringClass());
             literals.add(value.getDeclaringClass().getSimpleName() + "." + value.name());
@@ -155,7 +156,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
          Expression expr = member.getDefault();
          if (expr instanceof ArrayInitializer)
          {
-            final List<E> results = new ArrayList<E>();
+            final List<E> results = new ArrayList<>();
             @SuppressWarnings("unchecked")
             final List<Expression> arrayElements = ((ArrayInitializer) expr).expressions();
             for (Expression arrayElement : arrayElements)
@@ -189,12 +190,12 @@ public class AnnotationElementImpl implements AnnotationElementSource
       @Override
       public DefaultValue setClassArray(Class<?>... values)
       {
-         Assert.notNull(values, "null array not accepted");
+         requireNonNull(values, "null array not accepted");
 
-         final List<String> literals = new ArrayList<String>();
+         final List<String> literals = new ArrayList<>();
          for (Class<?> value : values)
          {
-            Assert.notNull(value, "null value not accepted");
+            requireNonNull(value, "null value not accepted");
 
             if (!value.isPrimitive())
             {
@@ -241,7 +242,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
          final Expression expr = member.getDefault();
          if (expr instanceof ArrayInitializer)
          {
-            final List<Class<?>> result = new ArrayList<Class<?>>();
+            final List<Class<?>> result = new ArrayList<>();
             @SuppressWarnings("unchecked")
             final List<Expression> arrayElements = ((ArrayInitializer) expr).expressions();
             for (Expression arrayElement : arrayElements)
@@ -259,7 +260,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
 
       private Class<?> resolveTypeLiteral(TypeLiteral typeLiteral)
       {
-         final Type<JavaAnnotationSource> type = new TypeImpl<JavaAnnotationSource>(getOrigin(), typeLiteral.getType());
+         final Type<JavaAnnotationSource> type = new TypeImpl<>(getOrigin(), typeLiteral.getType());
          if (type.isPrimitive())
          {
             final Class<?>[] primitiveTypes = { boolean.class, byte.class, short.class, int.class, long.class,
@@ -287,7 +288,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
       }
    }
 
-   private final AnnotationAccessor<JavaAnnotationSource, AnnotationElementSource> annotations = new AnnotationAccessor<JavaAnnotationSource, AnnotationElementSource>();
+   private final AnnotationAccessor<JavaAnnotationSource, AnnotationElementSource> annotations = new AnnotationAccessor<>();
 
    private final JavaAnnotationSource parent;
    private final AST ast;
@@ -397,7 +398,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
    {
       return annotations.removeAnnotation(this, member, annotation);
    }
-   
+
    @Override
    public void removeAllAnnotations()
    {
@@ -430,7 +431,7 @@ public class AnnotationElementImpl implements AnnotationElementSource
    @Override
    public Type<JavaAnnotationSource> getType()
    {
-      return new TypeImpl<JavaAnnotationSource>(parent,
+      return new TypeImpl<>(parent,
                member.getStructuralProperty(AnnotationTypeMemberDeclaration.TYPE_PROPERTY));
    }
 
